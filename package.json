@@ -1,0 +1,21 @@
+{
+  "name": "sf-chain",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.19.1",
+    "crypto-js": "^4.1.1",
+    "express": "^4.17.2"
+  },
+  "devDependencies": {
+    "jest": "^27.4.7",
+    "nodemon": "^2.0.15"
+  },
+  "scripts": {
+    "start": "node ./app",
+    "dev": "nodemon ./app",
+    "dev-test": "nodemon dev-test.js",
+    "test": "jest --watchAll"
+  }
+}
