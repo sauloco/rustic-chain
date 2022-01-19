@@ -7,6 +7,21 @@ class Transaction {
     this.outputs = [];
   }
 
+  update(senderWallet, recipient, amount) {
+    const senderOutput = this.outputs.find(output => output.address === senderWallet.publicKey);
+
+    if (amount > senderOutput.amount) {
+      console.log(`Amount ${amount} exceeds balance (${senderOutput.amount})`);
+      return;
+    }
+
+    senderOutput.amount = senderOutput.amount - amount;
+    this.outputs.push({ amount, address: recipient });
+    Transaction.signTransaction(this, senderWallet);
+
+    return this;
+  }
+
   static newTransaction(senderWallet, recipient, amount) {
     const transaction = new this();
 
@@ -47,6 +62,7 @@ class Transaction {
       ChainUtil.hash(transaction.outputs)
     );
   }
+  
 }
 
 module.exports = Transaction
