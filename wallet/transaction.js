@@ -11,7 +11,8 @@ class Transaction {
     const transaction = new this();
 
     if (amount > senderWallet.balance) {
-      throw new Error(`Amount ${amount} exceeds balance (${senderWallet.balance})`);
+      console.log(`Amount ${amount} exceeds balance (${senderWallet.balance})`);
+      return;
     }
 
     transaction.outputs.push(...[

@@ -20,5 +20,8 @@
     "dev": "nodemon ./app",
     "dev-test": "nodemon dev-test.js",
     "test": "jest --watchAll"
+  },
+  "jest": {
+    "testEnvironment": "node"
   }
 }
