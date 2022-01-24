@@ -17,6 +17,10 @@ const miner = new Miner(bc, tp, wallet, p2pServer);
 
 app.use(bodyParser.json());
 
+app.get('/balance', (req, res) => {
+  res.send({ balance: wallet.calculateBalance(bc) });
+})
+
 app.get('/blocks', (req, res) => {
   res.json(bc.chain);
 });
