@@ -1,5 +1,5 @@
-const ChainUtil = require('../chain-util');
-const { MINING_REWARD } = require('../config');
+const ChainUtil = require("../chain-util");
+const { MINING_REWARD, TRANSACTION_FEE } = require("../config");
 
 class Transaction {
   constructor() {
@@ -9,7 +9,9 @@ class Transaction {
   }
 
   update(senderWallet, recipient, amount) {
-    const senderOutput = this.outputs.find(output => output.address === senderWallet.publicKey);
+    const senderOutput = this.outputs.find(
+      (output) => output.address === senderWallet.publicKey
+    );
 
     if (amount > senderOutput.amount) {
       console.log(`Amount ${amount} exceeds balance (${senderOutput.amount})`);
@@ -24,7 +26,7 @@ class Transaction {
   }
 
   static transactionWithOutputs(senderWallet, outputs) {
-    const transaction  = new this();
+    const transaction = new this();
 
     transaction.outputs.push(...outputs);
     Transaction.signTransaction(transaction, senderWallet);
@@ -45,19 +47,23 @@ class Transaction {
     return Transaction.transactionWithOutputs(senderWallet, [
       {
         amount: senderWallet.balance - amount,
-        address: senderWallet.publicKey
+        address: senderWallet.publicKey,
       },
       {
         amount,
-        address: recipient
-      }
-    ])
+        address: recipient,
+      },
+    ]);
   }
 
   static rewardTransaction(minerWallet, blockchainWallet) {
-    return Transaction.transactionWithOutputs(blockchainWallet, [{
-      amount: MINING_REWARD, address: minerWallet.publicKey 
-    }]);
+    return Transaction.transactionWithOutputs(blockchainWallet, [
+      {
+        amount: MINING_REWARD,
+        address: minerWallet.publicKey,
+      },
+      { amount: TRANSACTION_FEE, address: blockchainWallet.publicKey },
+    ]);
   }
 
   static signTransaction(transaction, senderWallet) {
@@ -65,7 +71,7 @@ class Transaction {
       timestamp: Date.now(),
       amount: senderWallet.balance,
       address: senderWallet.publicKey,
-      signature: senderWallet.sign(ChainUtil.hash(transaction.outputs))
+      signature: senderWallet.sign(ChainUtil.hash(transaction.outputs)),
     };
   }
 
@@ -78,4 +84,4 @@ class Transaction {
   }
 }
 
-module.exports = Transaction
+module.exports = Transaction;
