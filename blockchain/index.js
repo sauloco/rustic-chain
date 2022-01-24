@@ -15,7 +15,7 @@ class Blockchain {
   isValidChain(chain) {
 
     if (JSON.stringify(chain[0]) !== JSON.stringify(Block.genesis())) {
-      // console.log('The genesis block must be the same.');
+      console.log('The genesis block must be the same.');
       return false
     };
 
@@ -25,7 +25,7 @@ class Blockchain {
 
       if (block.lastHash !== lastBlock.hash ||
         block.hash !== Block.blockHash(block)) {
-        // console.log('The hashes must be valid.', block, lastBlock);
+        console.log('The hashes must be valid.', block, lastBlock);
         return false;
       }
     }
