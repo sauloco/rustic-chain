@@ -11,14 +11,13 @@ class Miner {
 
   mine() {
     const validTransactions = this.transactionPool.validTransactions();
-    // include a reward for the miner
     validTransactions.push(Transaction.rewardTransaction(this.wallet, Wallet.blockchainWallet()))
     const block = this.blockchain.addBlock(validTransactions);
     this.p2pServer.syncChains();
     this.transactionPool.clear();
+    this.p2pServer.broadcastClearTransactions();
 
-    // broadcast to every miner to clear their transaction pools
-    
+    return block;
   }
 }
 
