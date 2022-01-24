@@ -43,13 +43,15 @@ class P2PServer {
   messageHandler(socket) {
     socket.on("message", (data) => {
       const message = JSON.parse(data);
+      
+      const { [message.type.toLowerCase()]: relevantBlock } = message;
 
       switch (message.type) {
-        case "chain":
-          this.blockchain.replaceChain(message.chain);
+        case MESSAGE_TYPES.chain:
+          this.blockchain.replaceChain(relevantBlock);
           break;
-        case "transaction":
-          this.blockchain.addTransaction(message.transaction);
+        case MESSAGE_TYPES.transaction:
+          this.transactionPool.updateOrAddTransaction(relevantBlock);
           break;
         case "clear-transactions":
           this.blockchain.clearTransactions();
