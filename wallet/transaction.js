@@ -76,7 +76,6 @@ class Transaction {
       ChainUtil.hash(transaction.outputs)
     );
   }
-  
 }
 
 module.exports = Transaction
