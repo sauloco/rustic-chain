@@ -52,10 +52,6 @@ describe("TransactionPool", () => {
     });
 
     it("grabs valid transactions", () => {
-      const currentValidTransactions = tp.validTransactions();
-      console.log(currentValidTransactions, currentValidTransactions.length);
-      console.log(validTransactions, validTransactions.length);
-      
       expect(tp.validTransactions()).toEqual(validTransactions);
     });
   });
